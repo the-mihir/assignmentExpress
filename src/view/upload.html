@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload with Node JS</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+</head>
+
+<body>
+<div class="container text-center mt-5">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="m-2">Upload Image</h2>
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <input class="form-control" type="file" name="image" accept="image/*" required>
+                <button class="btn btn-primary mt-2" type="submit">Upload Image</button>
+            </form>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <h2 class="m-1">List of Uploaded Image</h2>
+        <div class="col-12">
+            <table class="text-center table  table-bordered">
+                <thead>
+                <tr>
+                    <th>Image File</th>
+                    <th>File Name</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody class="tableData">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    const url = 'http://localhost:5500/getFiles';
+    let tableData = document.querySelector('.tableData');
+
+    async function getFiles() {
+        let getFiles = await fetch(url);
+        let files = await getFiles.json();
+
+        if (files.length > 0) {
+
+            for (let i = 0; i < files.length; i++) {
+
+                let tr = document.createElement('tr');
+                let td1 = document.createElement('td');
+                let td2 = document.createElement('td');
+                let td3 = document.createElement('td');
+                let img = document.createElement('img');
+                img.src = 'http://localhost:5500/res/upload/' + files[i];
+                img.style.maxWidth = '100px'; // Adjust the width as needed
+                img.style.maxHeight = '100px'; // Adjust the height as needed
+
+                td1.appendChild(img);
+                td2.innerHTML = files[i];
+                td3.innerHTML = `<a class="btn m-1 btn-secondary" href="/download?file=${files[i]}">Download</a><a class="btn m-1 btn-warning" href="/delete?file=${files[i]}">Delete</a>`;
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                tableData.appendChild(tr);
+
+            }
+
+        } else {
+            tableData.innerHTML = '<tr><td colspan="3">No Data Found</td></tr>';
+        }
+
+
+    }
+
+    getFiles();
+
+</script>
+
+</body>
+
+</html>

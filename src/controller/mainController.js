@@ -37,3 +37,12 @@ exports.CreateFile = (req, res) => {
     })
 
 }
+
+exports.UploadFile = (req, res) => {
+    fs.readFile('./src/view/upload.html', (err, data) => {
+        if (err) {
+            console.log(err);
+        }
+        res.end(data);
+    })
+}
