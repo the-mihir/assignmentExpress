@@ -1,5 +1,6 @@
 const fs = require("fs");
 
+
 exports.HomePage = (req, res) => {
     fs.readFile("./src/view/index.html", (err, data) => {
         if (err) {
@@ -38,11 +39,13 @@ exports.CreateFile = (req, res) => {
 
 }
 
-exports.UploadFile = (req, res) => {
-    fs.readFile('./src/view/upload.html', (err, data) => {
+exports.UploadPage = (req, res) => {
+    fs.readFile("./src/view/upload.html", (err, data) => {
         if (err) {
             console.log(err);
         }
         res.end(data);
     })
 }
+
+
