@@ -49,3 +49,20 @@ exports.UploadPage = (req, res) => {
 }
 
 
+exports.getFiles = (req, res) => {
+
+    fs.readdir('../uploads', function (err, files) {
+        if (err) {
+            console.error(err);
+            res.writeHead(500, { 'Content-Type': 'text/plain' });
+            res.end('Internal Server Error');
+        } else {
+            const imageList = files.filter(files => /\.(jpg|jpeg|png|gif)$/i.test(files));
+            res.json(imageList);
+        }
+    });
+
+}
+
+
+
