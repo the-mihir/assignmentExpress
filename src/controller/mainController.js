@@ -39,30 +39,13 @@ exports.CreateFile = (req, res) => {
 
 }
 
-exports.UploadPage = (req, res) => {
-    fs.readFile("./src/view/upload.html", (err, data) => {
+exports.uploadPage = (req, res) => {
+    fs.readFile("./src/view/upload-page.html", (err, data) => {
         if (err) {
             console.log(err);
         }
         res.end(data);
     })
 }
-
-
-exports.getFiles = (req, res) => {
-
-    fs.readdir('../uploads', function (err, files) {
-        if (err) {
-            console.error(err);
-            res.writeHead(500, { 'Content-Type': 'text/plain' });
-            res.end('Internal Server Error');
-        } else {
-            const imageList = files.filter(files => /\.(jpg|jpeg|png|gif)$/i.test(files));
-            res.json(imageList);
-        }
-    });
-
-}
-
 
 
